@@ -1,14 +1,14 @@
 CC=g++
 CFLAGS = -Wall -Werror -Wextra -std=c++17
-TEST_LIBS = -lcheck
-SOURCES = $(wildcard s21_*.c */s21_*.c)
+TEST_LIBS = -lgtest
+SOURCES = $(wildcard s21_matrix_oop/s21_*.cc)
 OS = $(shell uname)
 GCOV_FLAG = --no-external
 
 TARGET=s21_matrix_oop.a
 
 ifneq ($(OS), Darwin)
-	TEST_LIBS = -lcheck -lsubunit -pthread -lrt -lm
+	TEST_LIBS = -lgtest -lsubunit -pthread -lrt -lm
 	GCOV_FLAG =
 endif
 
@@ -19,8 +19,7 @@ $(TARGET):
 	ar rcs $(TARGET) *.o
 
 test: $(TARGET)
-	checkmk clean_mode=1 tests.check > test.c
-	gcc $(CFLAGS) --coverage $(SOURCES) test.c $(TARGET) $(TEST_LIBS) -o test
+	$(CC) $(CFLAGS) --coverage $(SOURCES) test.cc $(TARGET) $(TEST_LIBS) -o test
 	./test	
 	
 gcov_report: test
