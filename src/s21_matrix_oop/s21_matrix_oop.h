@@ -8,11 +8,14 @@ class S21Matrix {
   S21Matrix(const S21Matrix& other);
   ~S21Matrix();
 
+  bool S21Matrix::EqMatrix(const S21Matrix& other);
+  inline bool S21Matrix::GetDiff(double value1, double value2);
+
  private:
   int rows_;
   int cols_;
   double** matrix_;
-  const double EPS = 1e-6;
+  static const double EPS = 1e-6;
   enum class Status {
 };
 
