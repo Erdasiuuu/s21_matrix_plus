@@ -20,29 +20,3 @@ S21Matrix::~S21Matrix() {
 	rows_ = 0;
 	cols_ = 0;
 }
-
-int BothMatrixCorrect(matrix_t *A, matrix_t *B) {
-  return (CorrectMatrix(A) && CorrectMatrix(B)) ? SUCCESS : FAILURE;
-}
-
-int CorrectMatrix(matrix_t *A) {
-  int status = SUCCESS;
-  if (A == NULL || CorrectMatrixSize(A) != SUCCESS || A->matrix == NULL) {
-    status = FAILURE;
-  } else {
-    CheckMatrix(A, &status);
-  }
-  return status;
-}
-
-int CorrectMatrixSize(matrix_t *A) {
-  return (A->rows > 0 && A->columns > 0) ? SUCCESS : FAILURE;
-}
-
-void CheckMatrix(matrix_t *A, int *status) {
-  for (int row = 0; *status == SUCCESS && row < A->rows; row++) {
-    if (A->matrix[row] == NULL) {
-      *status = FAILURE;
-    }
-  }
-}
