@@ -9,26 +9,19 @@ S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
 		throw std::logic_error("The matrix size must be greater or equal than 0");
 	}
 	matrix_ = new double*[rows_]();
-	double* new_matrix = new double[rows_ * cols_]();
+	*matrix_ = new double[rows_ * cols_]();
 	for (int i = 0; i < rows_; i++) {
-		matrix_[i] = new_matrix + i * cols_;
+		matrix_[i] = *matrix_ + i * cols_;
 	}
 }
 
 S21Matrix::S21Matrix(const S21Matrix& other) : rows_(other.rows_), cols_(other.cols_) {
 	matrix_ = new double*[rows_]();
-	double* new_matrix = new double[rows_ * cols_]();
+	*matrix_ = new double[rows_ * cols_]();
 	for (int i = 0; i < rows_; i++) {
-		matrix_[i] = new_matrix + i * cols_;
+		matrix_[i] = *matrix_ + i * cols_;
 	}
 	std::copy(*matrix_, *matrix_ + rows_ * cols_, *(other.matrix_));
-#if 0
-	for (int i = 0; i < rows_; i++) {
-		for (int j = 0; j < cols_; j++) {
-			other.matrix_[i][j] = this->matrix_[i][j];
-		}
-	}
-#endif
 }
 
 S21Matrix::S21Matrix(S21Matrix&& other)

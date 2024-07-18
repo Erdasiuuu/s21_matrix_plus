@@ -3,7 +3,6 @@
 
 #define DEFAULT_VALUE_ROWS 3
 #define DEFAULT_VALUE_COLUMNS 3
-#define GET_DIFF(x, y) (fabs(x - y) <= EPS)
 
 void FillMatrix(double* arr, S21Matrix* struct_matrix) {
   int count = 0;
@@ -17,7 +16,6 @@ void FillMatrix(double* arr, S21Matrix* struct_matrix) {
 }
 
 void OutMatrix(S21Matrix* struct_matrix) {
-  int count = 0;
   double** matrix = struct_matrix->GetMatrix();
   for (int i = 0; i < struct_matrix->GetRows(); ++i) {
     for (int j = 0; j < struct_matrix->GetCols(); ++j) {
@@ -25,7 +23,6 @@ void OutMatrix(S21Matrix* struct_matrix) {
     }
     std::cout << std::endl;
   }
-  struct_matrix->SetMatrix(matrix);
 }
 
 bool CheckMatrix(S21Matrix matrix, double arr[]) {
@@ -34,7 +31,7 @@ bool CheckMatrix(S21Matrix matrix, double arr[]) {
   double** matrix_arr = matrix.GetMatrix();
   for (int i = 0; i < matrix.GetRows() && result; ++i) {
     for (int j = 0; j < matrix.GetCols() && result; ++j) {
-      if (!GET_DIFF(matrix_arr[i][j], arr[count++])) {
+      if (std::abs(matrix_arr[i][j] - arr[count++]) > 1e-6) {
         result = false;
       }
     }
@@ -154,7 +151,6 @@ TEST(Matrix, MulMatrix) {
   EXPECT_TRUE(matrix_1.EqMatrix(matrix_expect));
 }
 
-#if 0
 TEST(Matrix, Transpose) {
   int rows = 2, cols = 2;
   double arr_1[4] = {1.1, 2.8, -1.0, -0.9};
@@ -166,6 +162,7 @@ TEST(Matrix, Transpose) {
   S21Matrix transpose_matrix = matrix_1.Transpose();
   EXPECT_TRUE(transpose_matrix.EqMatrix(matrix_expect));
 }
+#if 0
 
 TEST(Matrix, CalcComplements) {
   int rows = 4, cols = 4;
