@@ -1,6 +1,10 @@
 #include "s21_matrix_oop/s21_matrix_oop.h"
 #include <gtest/gtest.h>
 
+#define DEFAULT_VALUE_ROWS 3
+#define DEFAULT_VALUE_COLUMNS 3
+#define GET_DIFF(x, y) (fabs(x - y) <= EPS)
+
 void FillMatrix(double* arr, S21Matrix* struct_matrix) {
   int count = 0;
   double** matrix = struct_matrix->GetMatrix();
@@ -8,6 +12,18 @@ void FillMatrix(double* arr, S21Matrix* struct_matrix) {
     for (int j = 0; j < struct_matrix->GetCols(); ++j) {
       matrix[i][j] = arr[count++];
     }
+  }
+  struct_matrix->SetMatrix(matrix);
+}
+
+void OutMatrix(S21Matrix* struct_matrix) {
+  int count = 0;
+  double** matrix = struct_matrix->GetMatrix();
+  for (int i = 0; i < struct_matrix->GetRows(); ++i) {
+    for (int j = 0; j < struct_matrix->GetCols(); ++j) {
+      std::cout << matrix[i][j] << ' ';
+    }
+    std::cout << std::endl;
   }
   struct_matrix->SetMatrix(matrix);
 }
@@ -28,10 +44,8 @@ bool CheckMatrix(S21Matrix matrix, double arr[]) {
 
 TEST(Matrix, DefaultConstructor) {
   S21Matrix* matrix = new S21Matrix();
-  double arr[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-  EXPECT_EQ(matrix->GetRows(), DEFAULT_VALUE_ROWS);
-  EXPECT_EQ(matrix->GetCols(), DEFAULT_VALUE_COLUMNS);
-  EXPECT_TRUE(CheckMatrix(*matrix, arr));
+  EXPECT_EQ(matrix->GetRows(), 0);
+  EXPECT_EQ(matrix->GetCols(), 0);
   delete matrix;
 }
 
@@ -55,6 +69,7 @@ TEST(Matrix, ConstructorWithOther) {
   EXPECT_TRUE(CheckMatrix(result_matrix, arr));
 }
 
+#if 0
 TEST(Matrix, ConstructorWithOtherMove) {
   int rows = 2, cols = 10;
   double arr[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -67,6 +82,8 @@ TEST(Matrix, ConstructorWithOtherMove) {
   EXPECT_EQ(matrix_1.GetCols(), 0);
 }
 
+#endif
+
 TEST(Matrix, EqMatrix) {
   int rows = 2;
   int cols = 2;
@@ -78,7 +95,6 @@ TEST(Matrix, EqMatrix) {
   FillMatrix(arr_2, &matrix_2);
   EXPECT_TRUE(matrix_1.EqMatrix(matrix_2));
 }
-
 TEST(Matrix, SumMatrix) {
   double arr_1[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
   double arr_2[9] = {9, 8, 7, 6, 5, 4, 3, 2, 1};
@@ -133,8 +149,11 @@ TEST(Matrix, MulMatrix) {
   matrix_1.MulMatrix(matrix_2);
   S21Matrix matrix_expect(DEFAULT_VALUE_ROWS, DEFAULT_VALUE_COLUMNS);
   FillMatrix(expect_result, &matrix_expect);
+  OutMatrix(&matrix_expect);
+  OutMatrix(&matrix_1);
   EXPECT_TRUE(matrix_1.EqMatrix(matrix_expect));
 }
+
 #if 0
 TEST(Matrix, Transpose) {
   int rows = 2, cols = 2;

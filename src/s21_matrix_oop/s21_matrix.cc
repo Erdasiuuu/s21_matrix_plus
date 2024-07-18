@@ -6,7 +6,7 @@ S21Matrix::S21Matrix() : S21Matrix(0, 0) { }
 
 S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
 	if (rows_ < 0 || cols_ < 0) {
-		std::length_error("The matrix size must be greater or equal than 0");
+		throw std::logic_error("The matrix size must be greater or equal than 0");
 	}
 	matrix_ = new double*[rows_]();
 	double* new_matrix = new double[rows_ * cols_]();
@@ -21,14 +21,22 @@ S21Matrix::S21Matrix(const S21Matrix& other) : rows_(other.rows_), cols_(other.c
 	for (int i = 0; i < rows_; i++) {
 		matrix_[i] = new_matrix + i * cols_;
 	}
-//	std::copy(*matrix, *matrix + rows_ * cols_, other.(*matrix);
+	std::copy(*matrix_, *matrix_ + rows_ * cols_, *(other.matrix_));
+#if 0
 	for (int i = 0; i < rows_; i++) {
 		for (int j = 0; j < cols_; j++) {
 			other.matrix_[i][j] = this->matrix_[i][j];
 		}
 	}
+#endif
 }
 
+S21Matrix::S21Matrix(S21Matrix&& other)
+    : rows_(other.rows_), cols_(other.cols_), matrix_(other.matrix_) {
+  other.matrix_ = nullptr;
+  other.rows_ = 0;
+  other.cols_ = 0;
+}
 
 S21Matrix::~S21Matrix() {
 	delete[] *matrix_;
@@ -37,6 +45,7 @@ S21Matrix::~S21Matrix() {
 	rows_ = 0;
 	cols_ = 0;
 }
+
 
 int S21Matrix::GetRows() { return this->rows_; }
 

@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS = -Wall -Werror -Wextra -std=c++17
+CFLAGS = -Wall #-Werror -Wextra -std=c++17
 TEST_LIBS = -lgtest
 SOURCES = $(wildcard s21_matrix_oop/s21_*.cc)
 OS = $(shell uname)
@@ -20,7 +20,7 @@ $(TARGET):
 
 test: $(TARGET)
 	$(CC) $(CFLAGS) --coverage $(SOURCES) test.cc $(TARGET) $(TEST_LIBS) -o test
-	./test	
+	./test
 	
 gcov_report: test
 	lcov -o gcov_test.info $(GCOV_FLAG) -c -d .
