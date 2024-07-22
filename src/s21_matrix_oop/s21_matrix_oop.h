@@ -1,7 +1,7 @@
 #ifndef CPP1_S21_MATRIXPLUS_1_SRC_S21_MATRIX_OOP_S21_MATRIX_OOP_H_
 #define CPP1_S21_MATRIXPLUS_1_SRC_S21_MATRIX_OOP_S21_MATRIX_OOP_H_
 
-#define EPS 1e-6
+#include <iostream> // X
 #include <cstring>
 #include <cmath>
 #include <stdexcept>
@@ -16,7 +16,7 @@ class S21Matrix {
   S21Matrix(S21Matrix&& other);
   ~S21Matrix();
 
-  bool EqMatrix(const S21Matrix& other);
+  bool EqMatrix(const S21Matrix& other) const;
   void SumMatrix(const S21Matrix& other);
   void SubMatrix(const S21Matrix& other);
   void MulNumber(const double num);
@@ -29,8 +29,8 @@ class S21Matrix {
         S21Matrix operator+(const S21Matrix& other);
         S21Matrix operator-(const S21Matrix& other);
         S21Matrix operator*(const S21Matrix& other);
-        S21Matrix operator*(const double num);
-        bool operator==(const S21Matrix& other);
+        S21Matrix operator*(double num);
+        bool operator==(const S21Matrix& other) const;
         S21Matrix& operator=(const S21Matrix& other);
   S21Matrix& operator=(S21Matrix&& other);
         S21Matrix operator+=(const S21Matrix& other);
@@ -51,9 +51,14 @@ class S21Matrix {
   int rows_;
   int cols_;
   double** matrix_;
-  static const std::string INCORRECT_SIZE;
 
-  inline bool GetDiff(double value1, double value2);
+  void UpBiggerValue(int index, double& result);
+  void DiffRows(int index);
+
+  static const std::string INCORRECT_SIZE;
+  static const double EPS;
+
+  inline bool GetDiff(const double value1, const double value2) const;
 };
 
 #endif //CPP1_S21_MATRIXPLUS_1_SRC_S21_MATRIX_OOP_S21_MATRIX_OOP_H_
