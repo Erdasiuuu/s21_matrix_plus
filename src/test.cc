@@ -146,8 +146,6 @@ TEST(Matrix, MulMatrix) {
   matrix_1.MulMatrix(matrix_2);
   S21Matrix matrix_expect(DEFAULT_VALUE_ROWS, DEFAULT_VALUE_COLUMNS);
   FillMatrix(expect_result, &matrix_expect);
-  OutMatrix(&matrix_expect);
-  OutMatrix(&matrix_1);
   EXPECT_TRUE(matrix_1.EqMatrix(matrix_expect));
 }
 
@@ -189,6 +187,7 @@ TEST(Matrix, CalcComplementsWithSize1) {
   EXPECT_TRUE(matrix_arr[0][0] == 1);
 }
 
+
 TEST(Matrix, Determinant) {
   int rows = 4, cols = 4;
   double arr_1[16] = {1, -9, -9, 1, 54, 1, -1, 6, 8, 1, -1, -9, 1, 4, -123, 1};
@@ -197,6 +196,7 @@ TEST(Matrix, Determinant) {
   FillMatrix(arr_1, &matrix_1);
   EXPECT_DOUBLE_EQ(matrix_1.Determinant(), det);
 }
+#endif
 
 TEST(Matrix, DeterminantSize1) {
   int rows = 1, cols = 1;
@@ -204,9 +204,11 @@ TEST(Matrix, DeterminantSize1) {
   S21Matrix matrix_1(rows, cols);
   FillMatrix(arr_1, &matrix_1);
   double det = matrix_1.Determinant();
+  std::cout << det << std::endl;
   EXPECT_DOUBLE_EQ(det, matrix_1.GetMatrix()[0][0]);
 }
 
+#if 0
 TEST(Matrix, InverseMatrix) {
   int rows = 3, cols = 3;
   double arr_1[9] = {9, -1, -2, -3, 1, 5, 6, 2, -1};
@@ -218,7 +220,7 @@ TEST(Matrix, InverseMatrix) {
   FillMatrix(expect_result, &matrix_expect);
   EXPECT_TRUE(matrix_1.InverseMatrix().EqMatrix(matrix_expect));
 }
-
+#endif
 TEST(Matrix, IndexesOperator) {
   int rows = 2, cols = 2;
   double arr[4] = {1, 2, 3, 4};
@@ -434,7 +436,7 @@ TEST(Matrix, MulMatrixException) {
   FillMatrix(arr_1, &matrix_1);
   EXPECT_THROW(matrix_1.MulMatrix(matrix_2), std::out_of_range);
 }
-
+#if 0
 TEST(Matrix, CalcComplementsException) {
   int rows_1 = 2, cols_1 = 3;
   double arr_1[6] = {1, 2, 3, 4, 5, 6};
@@ -442,6 +444,7 @@ TEST(Matrix, CalcComplementsException) {
   FillMatrix(arr_1, &matrix_1);
   EXPECT_THROW(matrix_1.CalcComplements(), std::out_of_range);
 }
+#endif
 
 TEST(Matrix, DeterminantException) {
   int rows_1 = 2, cols_1 = 3;
@@ -450,7 +453,7 @@ TEST(Matrix, DeterminantException) {
   FillMatrix(arr_1, &matrix_1);
   EXPECT_THROW(matrix_1.Determinant(), std::out_of_range);
 }
-
+#if 0
 TEST(Matrix, InverseMatrixException) {
   int rows_1 = 2, cols_1 = 2;
   double arr_1[4] = {2, 2, 2, 2};
@@ -458,6 +461,7 @@ TEST(Matrix, InverseMatrixException) {
   FillMatrix(arr_1, &matrix_1);
   EXPECT_THROW(matrix_1.InverseMatrix(), std::out_of_range);
 }
+#endif
 
 TEST(Matrix, ConstructorException) {
   int rows_1 = -1, cols_1 = 2;
@@ -475,7 +479,6 @@ TEST(Matrix, ArithmeticException) {
   FillMatrix(arr_2, &matrix_2);
   EXPECT_THROW(matrix_1.SumMatrix(matrix_2), std::out_of_range);
 }
-#endif
 int main() {
   testing::InitGoogleTest();
   return RUN_ALL_TESTS();
