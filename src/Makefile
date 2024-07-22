@@ -25,14 +25,14 @@ test: $(TARGET)
 gcov_report: test
 	lcov -o gcov_test.info $(GCOV_FLAG) -c -d .
 	genhtml -o report/ gcov_test.info
-	open ./report/index.html
+#	open ./report/index.html
 
 clean:
 	rm -rf ./*.o ./*.a gcov_test ./*.gcno ./*.gcda report/ ./test ./test.c ./*.info
 
 clang-format:
-	clang-format -style=Google -n *.c *.h
-	clang-format -style=Google -i *.c *.h
+	clang-format -style=Google -n $(SOURCES)
+	clang-format -style=Google -i $(SOURCES)
 
 
 rebuild: clean all
