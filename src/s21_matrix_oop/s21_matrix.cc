@@ -5,18 +5,17 @@ const std::string S21Matrix::INCORRECT_SIZE =
     "Matrix sizes not correct for this method";
 
 void S21Matrix::AllocateMatrix() {
-  matrix_ = new double*[rows_]();
-  *matrix_ = new double[rows_ * cols_]();
+  this->matrix_ = new double*[rows_]();
+  *this->matrix_ = new double[rows_ * cols_]();
   for (int i = 1; i < rows_; i++) {
-    matrix_[i] = *matrix_ + i * cols_;
+    this->matrix_[i] = *this->matrix_ + i * cols_;
   }
 }
-
 
 S21Matrix::S21Matrix() : S21Matrix(0, 0) {}
 
 S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
-  if (rows_ < 0 || cols_ < 0) {
+  if (this->rows_ < 0 || this->cols_ < 0) {
     throw std::logic_error("The matrix size must be greater or equal than 0");
   }
   this->AllocateMatrix();
@@ -25,7 +24,8 @@ S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
 S21Matrix::S21Matrix(const S21Matrix& other)
     : rows_(other.rows_), cols_(other.cols_) {
   this->AllocateMatrix();
-  std::copy(*(other.matrix_), *(other.matrix_) + rows_ * cols_, *matrix_);
+  std::copy(*other.matrix_, *other.matrix_ + other.rows_ * other.cols_,
+            *this->matrix_);
 }
 
 S21Matrix::S21Matrix(S21Matrix&& other)
@@ -36,70 +36,58 @@ S21Matrix::S21Matrix(S21Matrix&& other)
 }
 
 S21Matrix::~S21Matrix() {
-  if (this-> matrix_ != nullptr) {
-  delete[] *matrix_;
-  delete[] matrix_;
-  matrix_ = nullptr;
+  if (this->matrix_ != nullptr) {
+    delete[] * matrix_;
+    delete[] matrix_;
+    matrix_ = nullptr;
   }
   rows_ = 0;
   cols_ = 0;
 }
 
-int S21Matrix::GetRows() { return this->rows_; }
-
 void S21Matrix::SetRows(int rows) {
-  if (rows <= 0) {
+  if (rows < 0) {
     throw std::out_of_range("Incorrect size of matrix");
   }
   double** new_matrix = new double*[rows];
   *new_matrix = new double[rows * this->cols_]();
   for (int i = 1; i < rows; i++) {
     new_matrix[i] = *new_matrix + i * cols_;
-   }
-  size_t exist_length = std::min(rows, this->rows_);
+  }
+  int exist_length = std::min(rows, this->rows_);
   for (int index = 0; index < exist_length; index++) {
-	  std::copy(new_matrix[index], &new_matrix[index + 1][-1], this->matrix_[index]);
+    std::copy(new_matrix[index], &new_matrix[index + 1][-1],
+              this->matrix_[index]);
   }
-#if 0
-  for (int i = 0; i < rows; ++i) {
-    new_matrix[i] = new double[this->cols_];
-    for (int j = 0; j < this->cols_; ++j) {
-      if (rows >= this->rows_) {
-        new_matrix[i][j] = 0;
-      } else {
-        new_matrix[i][j] = this->matrix_[i][j];
-      }
-    }
-  }
-#endif
   this->~S21Matrix();
   this->matrix_ = new_matrix;
+  new_matrix = nullptr;
   this->rows_ = rows;
 }
 
 void S21Matrix::SetCols(int cols) {
-  if (cols <= 0) {
+  if (cols < 0) {
     throw std::out_of_range("Incorrect size of matrix");
   }
-  double** new_matrix = new double*[this->rows_];
-  for (int i = 0; i < this->rows_; ++i) {
-    new_matrix[i] = new double[cols];
-    for (int j = 0; j < cols; ++j) {
-      if (cols >= this->cols_) {
-        new_matrix[i][j] = 0;
-      } else {
-        new_matrix[i][j] = this->matrix_[i][j];
-        ;
-      }
-    }
-    delete[] this->matrix_[i];
+  double* new_matrix = new double[this->rows_ * cols]();
+  double* current_position = new_matrix;
+  int exist_length = std::min(cols, this->cols_);
+  for (int i = 0; i < exist_length; i++) {
+    std::copy(current_position, current_position + exist_length - 1,
+              this->matrix_[i]);
+    current_position += exist_length;
   }
-  delete[] this->matrix_;
-  this->matrix_ = new_matrix;
+  current_position = nullptr;
+  delete[] * this->matrix_;
+  for (int i = 0; i < this->rows_; i++) {
+    this->matrix_[i] = new_matrix + i * cols;
+  }
   this->cols_ = cols;
 }
 
-int S21Matrix::GetCols() { return this->cols_; }
+int S21Matrix::GetRows() const { return this->rows_; }
+
+int S21Matrix::GetCols() const { return this->cols_; }
 
 double** S21Matrix::GetMatrix() { return this->matrix_; }
 

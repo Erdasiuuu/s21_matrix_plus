@@ -14,5 +14,5 @@ bool S21Matrix::EqMatrix(const S21Matrix& other) const {
 }
 
 inline bool S21Matrix::GetDiff(const double value1, const double value2) const {
-  return std::abs(value1 - value2) < EPS;  // Try without namespace
+  return std::abs(value1 - value2) < S21Matrix::EPS;  // Try without namespace
 }

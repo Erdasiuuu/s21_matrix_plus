@@ -1,13 +1,12 @@
 #ifndef CPP1_S21_MATRIXPLUS_1_SRC_S21_MATRIX_OOP_S21_MATRIX_OOP_H_
 #define CPP1_S21_MATRIXPLUS_1_SRC_S21_MATRIX_OOP_S21_MATRIX_OOP_H_
 
-#include <iostream> // X
-#include <cstring>
-#include <cmath>
-#include <stdexcept>
 #include <algorithm>
+#include <cmath>
+#include <cstring>
+#include <iostream>  // X
+#include <stdexcept>
 #include <utility>
-
 
 class S21Matrix {
  public:
@@ -22,32 +21,30 @@ class S21Matrix {
   void SubMatrix(const S21Matrix& other);
   void MulNumber(const double num);
   void MulMatrix(const S21Matrix& other);
-          S21Matrix Transpose();
-        S21Matrix CalcComplements();
-        double Determinant();
-        S21Matrix InverseMatrix();
+  S21Matrix Transpose() const;
+  S21Matrix CalcComplements() const;
+  double Determinant() const;
+  S21Matrix InverseMatrix() const;
 
-        S21Matrix operator+(const S21Matrix& other);
-        S21Matrix operator-(const S21Matrix& other);
-        S21Matrix operator*(const S21Matrix& other);
-        S21Matrix operator*(double num) const;
-        bool operator==(const S21Matrix& other) const;
-        S21Matrix& operator=(const S21Matrix& other);
+  S21Matrix operator+(const S21Matrix& other) const;
+  S21Matrix operator-(const S21Matrix& other) const;
+  S21Matrix operator*(const S21Matrix& other) const;
+  S21Matrix operator*(double num) const;
+  bool operator==(const S21Matrix& other) const;
+  S21Matrix& operator=(const S21Matrix& other);
   S21Matrix& operator=(S21Matrix&& other);
-        S21Matrix operator+=(const S21Matrix& other);
-        S21Matrix operator-=(const S21Matrix& other);
-        S21Matrix operator*=(const S21Matrix& other);
-        S21Matrix operator*=(const double num);
-        double& operator()(int i, int j);
+  S21Matrix operator+=(const S21Matrix& other);
+  S21Matrix operator-=(const S21Matrix& other);
+  S21Matrix operator*=(const S21Matrix& other);
+  S21Matrix operator*=(const double num);
+  double& operator()(int i, int j);
 
-	friend void Out(const S21Matrix& m);
-
-        void SetRows(int rows);
-        void SetCols(int cols);
-        int GetRows();
-        int GetCols();
-        double** GetMatrix();
-        void SetMatrix(double** matrix);
+  void SetRows(int rows);
+  void SetCols(int cols);
+  int GetRows() const;
+  int GetCols() const;
+  double** GetMatrix();
+  void SetMatrix(double** matrix);
 
  private:
   int rows_;
@@ -56,7 +53,7 @@ class S21Matrix {
 
   void UpBiggerValue(int index, double& result);
   void DiffRows(int index);
-  S21Matrix GetMinorMatrix(int row, int col);
+  S21Matrix GetMinorMatrix(int row, int col) const;
   void AllocateMatrix();
 
   static const std::string INCORRECT_SIZE;
@@ -65,6 +62,6 @@ class S21Matrix {
   inline bool GetDiff(const double value1, const double value2) const;
 };
 
-S21Matrix operator*(double number, const S21Matrix &matrix) noexcept;
+S21Matrix operator*(double number, const S21Matrix& matrix) noexcept;
 
-#endif //CPP1_S21_MATRIXPLUS_1_SRC_S21_MATRIX_OOP_S21_MATRIX_OOP_H_
+#endif  // CPP1_S21_MATRIXPLUS_1_SRC_S21_MATRIX_OOP_S21_MATRIX_OOP_H_

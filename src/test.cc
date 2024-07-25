@@ -364,7 +364,6 @@ TEST(Matrix, MulNumberAssignmentOperator) {
   matrix_1 *= num;
   EXPECT_TRUE(matrix_1.EqMatrix(matrix_result));
 }
-#if 0
 TEST(Matrix, SetRows) {
   int rows = 2, cols = 2;
   int new_rows = 3;
@@ -391,7 +390,6 @@ TEST(Matrix, SetCols) {
   matrix_1.SetCols(new_cols);
   EXPECT_TRUE(matrix_1.GetCols() == new_cols);
 }
-#endif
 
 TEST(Matrix, SetRowsException) {
   int new_cols = -1;
