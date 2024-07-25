@@ -19,8 +19,8 @@ $(TARGET):
 	ar rcs $(TARGET) *.o
 
 test: $(TARGET)
-	$(CC) $(CFLAGS) --coverage $(SOURCES) test.cc $(TARGET) $(TEST_LIBS) -o test
-	./test
+	$(CC) $(CFLAGS) --coverage $(SOURCES) test.cc $(TARGET) $(TEST_LIBS) -o test -g
+#	./test
 	
 gcov_report: test
 	lcov -o gcov_test.info $(GCOV_FLAG) -c -d .

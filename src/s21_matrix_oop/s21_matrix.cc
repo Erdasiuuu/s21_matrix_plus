@@ -12,7 +12,7 @@ S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
   }
   matrix_ = new double*[rows_]();
   *matrix_ = new double[rows_ * cols_]();
-  for (int i = 0; i < rows_; i++) {
+  for (int i = 1; i < rows_; i++) {
     matrix_[i] = *matrix_ + i * cols_;
   }
 }
@@ -21,7 +21,7 @@ S21Matrix::S21Matrix(const S21Matrix& other)
     : rows_(other.rows_), cols_(other.cols_) {
   matrix_ = new double*[rows_]();
   *matrix_ = new double[rows_ * cols_]();
-  for (int i = 0; i < rows_; i++) {
+  for (int i = 1; i < rows_; i++) {
     matrix_[i] = *matrix_ + i * cols_;
   }
   std::copy(*(other.matrix_), *(other.matrix_) + rows_ * cols_, *matrix_);
@@ -35,7 +35,7 @@ S21Matrix::S21Matrix(S21Matrix&& other)
 }
 
 S21Matrix::~S21Matrix() {
-  delete[] * matrix_;
+  delete[] *matrix_;
   delete[] matrix_;
   matrix_ = nullptr;
   rows_ = 0;
@@ -49,6 +49,10 @@ void S21Matrix::SetRows(int rows) {
     throw std::out_of_range("Incorrect size of matrix");
   }
   double** new_matrix = new double*[rows];
+  *new_matrix = new double[rows * this->cols_]();
+//  for (int i = 1; i < rows; i++
+  //size_t length = std::max(rows, this->rows_);
+#if 0
   for (int i = 0; i < rows; ++i) {
     new_matrix[i] = new double[this->cols_];
     for (int j = 0; j < this->cols_; ++j) {
@@ -59,6 +63,7 @@ void S21Matrix::SetRows(int rows) {
       }
     }
   }
+#endif
   this->~S21Matrix();
   this->matrix_ = new_matrix;
   this->rows_ = rows;

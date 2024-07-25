@@ -16,7 +16,7 @@ S21Matrix& S21Matrix::operator=(S21Matrix&& other) {
 }
 
 double& S21Matrix::operator()(int i, int j) {
-	if (i < 0 || j < 0 || i > this->rows_ || j >= this->cols_) {
+	if (i < 0 || j < 0 || i >= this->rows_ || j >= this->cols_) {
 		std::out_of_range("Incorrect indexes");
 	}
 	return this->matrix_[i][j];

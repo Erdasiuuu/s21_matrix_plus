@@ -39,6 +39,7 @@ class S21Matrix {
         S21Matrix operator*=(const double num);
         double& operator()(int i, int j);
 
+	friend void Out(const S21Matrix& m);
 
         void SetRows(int rows);
         void SetCols(int cols);
