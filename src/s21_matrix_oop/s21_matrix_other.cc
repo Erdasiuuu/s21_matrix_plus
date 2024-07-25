@@ -10,27 +10,14 @@ S21Matrix S21Matrix::Transpose() {
   return result;
 }
 
-void Out(const S21Matrix& m) {
-		std::cout << std::endl;
-	for (int i = 0; i < m.rows_; i++) {
-		for (int j = 0; j < m.cols_; j++) {
-			std::cout << m.matrix_[i][j] << ' ';
-		}
-		std::cout << std::endl;
-	}
-		std::cout << std::endl;
-}
-
 double S21Matrix::Determinant() {
 	if (this->rows_ != this->cols_) {
 		throw std::logic_error(INCORRECT_SIZE + "(Determinant)");
 	}
 	S21Matrix tmp(*this);
 	double result = 1.0;
-		Out(tmp);
 	for (int index = 0; index < tmp.rows_ && std::abs(result) >= S21Matrix::EPS; index++) {
 		tmp.UpBiggerValue(index, result);
-		Out(tmp);
 		if (std::abs(tmp.matrix_[index][index]) >= S21Matrix::EPS) {
 			tmp.DiffRows(index);
 		}
@@ -109,10 +96,19 @@ S21Matrix S21Matrix::GetMinorMatrix(int row, int col) {
   return result;
 }
 
-#if 0
 S21Matrix S21Matrix::InverseMatrix() {
 	if (this->rows_ != this->cols_) {
 		throw std::logic_error(INCORRECT_SIZE + "(InverseMatrix)");
 	}
-#endif
+	double det = this->Determinant();
+	if (std::abs(det) < S21Matrix::EPS) {
+		throw std::logic_error("Determinant must not equal zero");
+	}
+	return 1.0 / det * this->Transpose().CalcComplements();
+}
+
+S21Matrix operator*(double number, const S21Matrix &matrix) noexcept {
+  S21Matrix tmp = matrix * number;
+  return tmp;
+}
 

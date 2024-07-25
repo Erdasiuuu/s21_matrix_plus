@@ -45,7 +45,7 @@ S21Matrix operator*(const double num, const S21Matrix& other) {
 }
 #endif
 
-S21Matrix S21Matrix::operator*(double num) {
+S21Matrix S21Matrix::operator*(double num) const {
 	S21Matrix tmp(*this);
 	tmp.MulNumber(num);
 	return tmp;

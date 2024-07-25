@@ -202,7 +202,6 @@ TEST(Matrix, DeterminantSize1) {
   EXPECT_DOUBLE_EQ(det, matrix_1.GetMatrix()[0][0]);
 }
 
-#if 0
 TEST(Matrix, InverseMatrix) {
   int rows = 3, cols = 3;
   double arr_1[9] = {9, -1, -2, -3, 1, 5, 6, 2, -1};
@@ -214,7 +213,7 @@ TEST(Matrix, InverseMatrix) {
   FillMatrix(expect_result, &matrix_expect);
   EXPECT_TRUE(matrix_1.InverseMatrix().EqMatrix(matrix_expect));
 }
-#endif
+
 TEST(Matrix, IndexesOperator) {
   int rows = 2, cols = 2;
   double arr[4] = {1, 2, 3, 4};
@@ -447,7 +446,7 @@ TEST(Matrix, DeterminantException) {
   FillMatrix(arr_1, &matrix_1);
   EXPECT_THROW(matrix_1.Determinant(), std::logic_error);
 }
-#if 0
+
 TEST(Matrix, InverseMatrixException) {
   int rows_1 = 2, cols_1 = 2;
   double arr_1[4] = {2, 2, 2, 2};
@@ -455,7 +454,6 @@ TEST(Matrix, InverseMatrixException) {
   FillMatrix(arr_1, &matrix_1);
   EXPECT_THROW(matrix_1.InverseMatrix(), std::logic_error);
 }
-#endif
 
 TEST(Matrix, ConstructorException) {
   int rows_1 = -1, cols_1 = 2;

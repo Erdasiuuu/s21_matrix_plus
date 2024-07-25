@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <utility>
 
+
 class S21Matrix {
  public:
   S21Matrix();
@@ -29,7 +30,7 @@ class S21Matrix {
         S21Matrix operator+(const S21Matrix& other);
         S21Matrix operator-(const S21Matrix& other);
         S21Matrix operator*(const S21Matrix& other);
-        S21Matrix operator*(double num);
+        S21Matrix operator*(double num) const;
         bool operator==(const S21Matrix& other) const;
         S21Matrix& operator=(const S21Matrix& other);
   S21Matrix& operator=(S21Matrix&& other);
@@ -63,5 +64,7 @@ class S21Matrix {
 
   inline bool GetDiff(const double value1, const double value2) const;
 };
+
+S21Matrix operator*(double number, const S21Matrix &matrix) noexcept;
 
 #endif //CPP1_S21_MATRIXPLUS_1_SRC_S21_MATRIX_OOP_S21_MATRIX_OOP_H_
