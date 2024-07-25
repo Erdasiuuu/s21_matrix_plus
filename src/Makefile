@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS = -Wall #-Werror -Wextra -std=c++17
+CFLAGS = -Wall -Werror -Wextra -std=c++17
 TEST_LIBS = -lgtest
 SOURCES = $(wildcard s21_matrix_oop/s21_*.cc)
 OS = $(shell uname)
