@@ -67,7 +67,7 @@ void S21Matrix::DiffRows(int index) {
   }
 }
 
-S21Matrix S21Matrx::CalcComplements() {
+S21Matrix S21Matrix::CalcComplements() {
 	if (this->rows_ != this->cols_) {
 		throw std::logic_error(INCORRECT_SIZE + "(CalcComplements)");
 	}
@@ -77,8 +77,8 @@ S21Matrix S21Matrx::CalcComplements() {
 		**result.matrix_ = 1;
 	}
 	else {
-		for (int row = 0; row < result.rows_; i++) {
-			for (int col = 0; col < result.cols_; j++) {
+		for (int row = 0; row < result.rows_; row++) {
+			for (int col = 0; col < result.cols_; col++) {
 				S21Matrix minor = this->GetMinorMatrix(row, col);
 				result.matrix_[row][col] = minor.Determinant();
 
@@ -94,18 +94,25 @@ S21Matrix S21Matrx::CalcComplements() {
 S21Matrix S21Matrix::GetMinorMatrix(int row, int col) {
 	S21Matrix result(this->rows_ - 1, this->cols_ - 1);
 	int row_correct = 0;
-  for (int i = 0; i < this->rows_; i++) {
+  for (int i = 0; i < result.rows_; i++) {
     int col_correct = 0;
-    for (int j = 0; j < this->cols_; j++) {
+    for (int j = 0; j < result.cols_; j++) {
       if (row == i) {
         row_correct = 1;
       }
       if (col == j) {
         col_correct = 1;
       }
-      result->matrix_[i][j] = this->matrix[i + row_correct][j + col_correct];
+      result.matrix_[i][j] = this->matrix_[i + row_correct][j + col_correct];
     }
   }
+  return result;
 }
 
+#if 0
+S21Matrix S21Matrix::InverseMatrix() {
+	if (this->rows_ != this->cols_) {
+		throw std::logic_error(INCORRECT_SIZE + "(InverseMatrix)");
+	}
+#endif
 

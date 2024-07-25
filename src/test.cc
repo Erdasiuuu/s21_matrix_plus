@@ -66,7 +66,6 @@ TEST(Matrix, ConstructorWithOther) {
   EXPECT_TRUE(CheckMatrix(result_matrix, arr));
 }
 
-#if 0
 TEST(Matrix, ConstructorWithOtherMove) {
   int rows = 2, cols = 10;
   double arr[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -79,7 +78,6 @@ TEST(Matrix, ConstructorWithOtherMove) {
   EXPECT_EQ(matrix_1.GetCols(), 0);
 }
 
-#endif
 
 TEST(Matrix, EqMatrix) {
   int rows = 2;
@@ -160,7 +158,6 @@ TEST(Matrix, Transpose) {
   S21Matrix transpose_matrix = matrix_1.Transpose();
   EXPECT_TRUE(transpose_matrix.EqMatrix(matrix_expect));
 }
-#if 0
 
 TEST(Matrix, CalcComplements) {
   int rows = 4, cols = 4;
@@ -186,8 +183,6 @@ TEST(Matrix, CalcComplementsWithSize1) {
   EXPECT_TRUE(result_matrix.GetCols() == 1);
   EXPECT_TRUE(matrix_arr[0][0] == 1);
 }
-
-#endif
 
 TEST(Matrix, Determinant) {
   int rows = 4, cols = 4;
@@ -436,7 +431,7 @@ TEST(Matrix, MulMatrixException) {
   FillMatrix(arr_1, &matrix_1);
   EXPECT_THROW(matrix_1.MulMatrix(matrix_2), std::logic_error);
 }
-#if 0
+
 TEST(Matrix, CalcComplementsException) {
   int rows_1 = 2, cols_1 = 3;
   double arr_1[6] = {1, 2, 3, 4, 5, 6};
@@ -444,7 +439,6 @@ TEST(Matrix, CalcComplementsException) {
   FillMatrix(arr_1, &matrix_1);
   EXPECT_THROW(matrix_1.CalcComplements(), std::logic_error);
 }
-#endif
 
 TEST(Matrix, DeterminantException) {
   int rows_1 = 2, cols_1 = 3;

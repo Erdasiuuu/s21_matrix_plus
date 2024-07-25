@@ -55,6 +55,8 @@ class S21Matrix {
 
   void UpBiggerValue(int index, double& result);
   void DiffRows(int index);
+  S21Matrix GetMinorMatrix(int row, int col);
+  void AllocateMatrix();
 
   static const std::string INCORRECT_SIZE;
   static const double EPS;

@@ -4,12 +4,7 @@ const double S21Matrix::EPS = 1e-6;
 const std::string S21Matrix::INCORRECT_SIZE =
     "Matrix sizes not correct for this method";
 
-S21Matrix::S21Matrix() : S21Matrix(0, 0) {}
-
-S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
-  if (rows_ < 0 || cols_ < 0) {
-    throw std::logic_error("The matrix size must be greater or equal than 0");
-  }
+void S21Matrix::AllocateMatrix() {
   matrix_ = new double*[rows_]();
   *matrix_ = new double[rows_ * cols_]();
   for (int i = 1; i < rows_; i++) {
@@ -17,13 +12,19 @@ S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
   }
 }
 
+
+S21Matrix::S21Matrix() : S21Matrix(0, 0) {}
+
+S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
+  if (rows_ < 0 || cols_ < 0) {
+    throw std::logic_error("The matrix size must be greater or equal than 0");
+  }
+  this->AllocateMatrix();
+}
+
 S21Matrix::S21Matrix(const S21Matrix& other)
     : rows_(other.rows_), cols_(other.cols_) {
-  matrix_ = new double*[rows_]();
-  *matrix_ = new double[rows_ * cols_]();
-  for (int i = 1; i < rows_; i++) {
-    matrix_[i] = *matrix_ + i * cols_;
-  }
+  this->AllocateMatrix();
   std::copy(*(other.matrix_), *(other.matrix_) + rows_ * cols_, *matrix_);
 }
 
@@ -35,9 +36,11 @@ S21Matrix::S21Matrix(S21Matrix&& other)
 }
 
 S21Matrix::~S21Matrix() {
+  if (this-> matrix_ != nullptr) {
   delete[] *matrix_;
   delete[] matrix_;
   matrix_ = nullptr;
+  }
   rows_ = 0;
   cols_ = 0;
 }
@@ -50,8 +53,13 @@ void S21Matrix::SetRows(int rows) {
   }
   double** new_matrix = new double*[rows];
   *new_matrix = new double[rows * this->cols_]();
-//  for (int i = 1; i < rows; i++
-  //size_t length = std::max(rows, this->rows_);
+  for (int i = 1; i < rows; i++) {
+    new_matrix[i] = *new_matrix + i * cols_;
+   }
+  size_t exist_length = std::min(rows, this->rows_);
+  for (int index = 0; index < exist_length; index++) {
+	  std::copy(new_matrix[index], &new_matrix[index + 1][-1], this->matrix_[index]);
+  }
 #if 0
   for (int i = 0; i < rows; ++i) {
     new_matrix[i] = new double[this->cols_];
