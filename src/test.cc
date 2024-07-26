@@ -40,8 +40,8 @@ bool CheckMatrix(S21Matrix matrix, double arr[]) {
 }
 TEST(Matrix, DefaultConstructor) {
   S21Matrix* matrix = new S21Matrix();
-  EXPECT_EQ(matrix->GetRows(), 1);
-  EXPECT_EQ(matrix->GetCols(), 1);
+  EXPECT_EQ(matrix->GetRows(), 0);
+  EXPECT_EQ(matrix->GetCols(), 0);
   delete matrix;
 }
 
