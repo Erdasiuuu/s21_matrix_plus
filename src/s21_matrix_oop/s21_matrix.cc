@@ -40,8 +40,8 @@ S21Matrix::S21Matrix(S21Matrix&& other)
 }
 
 S21Matrix::~S21Matrix() {
-  if (this->matrix_ != nullptr) {
-    if (this->cols_ != 0) {
+  if (matrix_ != nullptr) {
+    if (cols_ != 0) {
       delete[] * matrix_;
     }
     delete[] matrix_;
@@ -62,8 +62,8 @@ void S21Matrix::SetRows(int rows) {
   }
   int exist_length = std::min(rows, this->rows_);
   for (int index = 0; index < exist_length; index++) {
-    std::copy(new_matrix[index], &new_matrix[index][this->cols_],
-              this->matrix_[index]);
+    std::copy(this->matrix_[index], this->matrix_[index] + this->cols_,
+              new_matrix[index]);
   }
   int cols = this->cols_;
   this->~S21Matrix();
@@ -80,10 +80,10 @@ void S21Matrix::SetCols(int cols) {
   double* new_matrix = new double[this->rows_ * cols]();
   double* current_position = new_matrix;
   int exist_length = std::min(cols, this->cols_);
-  for (int i = 0; i < exist_length; i++) {
-    std::copy(current_position, current_position + exist_length - 1,
-              this->matrix_[i]);
-    current_position += exist_length;
+  for (int i = 0; i < this->rows_; i++) {
+    std::copy(this->matrix_[i], this->matrix_[i] + exist_length,
+              current_position);
+    current_position += cols;
   }
   current_position = nullptr;
   delete[] * this->matrix_;
