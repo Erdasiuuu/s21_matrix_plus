@@ -4,9 +4,9 @@
 #define PREDEFINE_ROWS 3
 #define PREDEFINE_COLS 3
 
-void FillMatrix(double* arr, S21Matrix* struct_matrix) {
+void FillMatrix(double *arr, S21Matrix *struct_matrix) {
   int count = 0;
-  double** matrix = struct_matrix->GetMatrix();
+  double **matrix = struct_matrix->GetMatrix();
   for (int i = 0; i < struct_matrix->GetRows(); ++i) {
     for (int j = 0; j < struct_matrix->GetCols(); ++j) {
       matrix[i][j] = arr[count++];
@@ -15,8 +15,8 @@ void FillMatrix(double* arr, S21Matrix* struct_matrix) {
   struct_matrix->SetMatrix(matrix);
 }
 
-void OutMatrix(S21Matrix* struct_matrix) {
-  double** matrix = struct_matrix->GetMatrix();
+void OutMatrix(S21Matrix *struct_matrix) {
+  double **matrix = struct_matrix->GetMatrix();
   for (int i = 0; i < struct_matrix->GetRows(); ++i) {
     for (int j = 0; j < struct_matrix->GetCols(); ++j) {
       std::cout << matrix[i][j] << ' ';
@@ -28,7 +28,7 @@ void OutMatrix(S21Matrix* struct_matrix) {
 bool CheckMatrix(S21Matrix matrix, double arr[]) {
   bool result = true;
   int count = 0;
-  double** matrix_arr = matrix.GetMatrix();
+  double **matrix_arr = matrix.GetMatrix();
   for (int i = 0; i < matrix.GetRows() && result; ++i) {
     for (int j = 0; j < matrix.GetCols() && result; ++j) {
       if (std::abs(matrix_arr[i][j] - arr[count++]) > 1e-6) {
@@ -39,7 +39,7 @@ bool CheckMatrix(S21Matrix matrix, double arr[]) {
   return result;
 }
 TEST(Matrix, DefaultConstructor) {
-  S21Matrix* matrix = new S21Matrix();
+  S21Matrix *matrix = new S21Matrix();
   EXPECT_EQ(matrix->GetRows(), 0);
   EXPECT_EQ(matrix->GetCols(), 0);
   delete matrix;
@@ -433,7 +433,7 @@ TEST(Method, CalcComplementsWithSize1) {
   S21Matrix matrix_1(rows, cols);
   FillMatrix(arr_1, &matrix_1);
   S21Matrix result_matrix = matrix_1.CalcComplements();
-  double** matrix_arr = result_matrix.GetMatrix();
+  double **matrix_arr = result_matrix.GetMatrix();
   EXPECT_TRUE(result_matrix.GetRows() == 1);
   EXPECT_TRUE(result_matrix.GetCols() == 1);
   EXPECT_TRUE(matrix_arr[0][0] == 1);
@@ -551,7 +551,7 @@ TEST(Operator, IndexesOperator) {
   matrix(0, 1) = arr[1];
   matrix(1, 0) = arr[2];
   matrix(1, 1) = arr[3];
-  double** m = matrix.GetMatrix();
+  double **m = matrix.GetMatrix();
   EXPECT_DOUBLE_EQ(m[0][0], arr[0]);
   EXPECT_DOUBLE_EQ(m[0][1], arr[1]);
   EXPECT_DOUBLE_EQ(m[1][0], arr[2]);
@@ -649,7 +649,7 @@ TEST(Operator, MulMatrixOperatorFailer) {
   S21Matrix mat_2;
   EXPECT_THROW(
       {
-        mat_1* mat_2;
+        mat_1 *mat_2;
         mat_1 *= mat_2;
       },
       std::logic_error);
@@ -883,7 +883,7 @@ TEST(SetGet, SetGetCols1) {
   S21Matrix matrix_1(rows, cols);
   FillMatrix(arr_1, &matrix_1);
   matrix_1.SetCols(new_cols);
-  double** matrix = matrix_1.GetMatrix();
+  double **matrix = matrix_1.GetMatrix();
   EXPECT_DOUBLE_EQ(matrix[0][2], 0);
   EXPECT_DOUBLE_EQ(matrix[1][2], 0);
   new_cols = 1;

@@ -12,7 +12,7 @@ S21Matrix S21Matrix::Transpose() const {
 
 double S21Matrix::Determinant() const {
   if (this->rows_ != this->cols_) {
-    throw std::logic_error(INCORRECT_SIZE + "(Determinant)");
+    throw std::logic_error(S21Matrix::INCORRECT_SIZE + "(Determinant)");
   }
   S21Matrix tmp(*this);
   double result = 1.0;
@@ -55,7 +55,7 @@ void S21Matrix::DiffRows(int index) noexcept {
 
 S21Matrix S21Matrix::CalcComplements() const {
   if (this->rows_ != this->cols_) {
-    throw std::logic_error(INCORRECT_SIZE + "(CalcComplements)");
+    throw std::logic_error(S21Matrix::INCORRECT_SIZE + "(CalcComplements)");
   }
   S21Matrix result(this->rows_, this->cols_);
 
@@ -96,7 +96,7 @@ S21Matrix S21Matrix::GetMinorMatrix(int row, int col) const {
 
 S21Matrix S21Matrix::InverseMatrix() const {
   if (this->rows_ != this->cols_) {
-    throw std::logic_error(INCORRECT_SIZE + "(InverseMatrix)");
+    throw std::logic_error(S21Matrix::INCORRECT_SIZE + "(InverseMatrix)");
   }
   double det = this->Determinant();
   if (std::abs(det) < S21Matrix::EPS) {
