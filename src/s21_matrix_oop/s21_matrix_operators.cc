@@ -6,7 +6,7 @@ S21Matrix& S21Matrix::operator=(const S21Matrix& other) {
   return *this;
 }
 
-S21Matrix& S21Matrix::operator=(S21Matrix&& other) {
+S21Matrix& S21Matrix::operator=(S21Matrix&& other) noexcept {
   if (this != &other) {
     std::swap(this->rows_, other.rows_);
     std::swap(this->cols_, other.cols_);
@@ -22,7 +22,7 @@ double& S21Matrix::operator()(int i, int j) {
   return this->matrix_[i][j];
 }
 
-bool S21Matrix::operator==(const S21Matrix& other) const {
+bool S21Matrix::operator==(const S21Matrix& other) const noexcept {
   return this->EqMatrix(other);
 }
 

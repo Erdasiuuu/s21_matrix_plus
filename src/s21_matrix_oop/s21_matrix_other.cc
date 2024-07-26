@@ -27,7 +27,7 @@ double S21Matrix::Determinant() const {
   return result;
 }
 
-void S21Matrix::UpBiggerValue(int index, double& result) {
+void S21Matrix::UpBiggerValue(int index, double& result) noexcept {
   int max_index = index;
   double max = std::abs(this->matrix_[index][index]);
   for (int i = index + 1; i < this->rows_; i++) {
@@ -38,15 +38,13 @@ void S21Matrix::UpBiggerValue(int index, double& result) {
   }
   if (max_index != index) {
     for (int i = 0; i < this->cols_; i++) {
-      double tmp = this->matrix_[index][i];
-      this->matrix_[index][i] = this->matrix_[max_index][i];
-      this->matrix_[max_index][i] = tmp;
+      std::swap(this->matrix_[index][i], this->matrix_[max_index][i]);
     }
     result = -result;
   }
 }
 
-void S21Matrix::DiffRows(int index) {
+void S21Matrix::DiffRows(int index) noexcept {
   for (int i = index + 1; i < this->rows_; i++) {
     double div = this->matrix_[i][index] / this->matrix_[index][index];
     for (int j = index; j < this->rows_; j++) {

@@ -22,7 +22,7 @@ void S21Matrix::SubMatrix(const S21Matrix& other) {
   }
 }
 
-void S21Matrix::MulNumber(const double num) {
+void S21Matrix::MulNumber(const double num) noexcept {
   for (int i = 0; i < this->rows_; i++) {
     for (int j = 0; j < this->cols_; j++) {
       this->matrix_[i][j] *= num;

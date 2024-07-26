@@ -1,6 +1,6 @@
 #include "s21_matrix_oop.h"
 
-bool S21Matrix::EqMatrix(const S21Matrix& other) const {
+bool S21Matrix::EqMatrix(const S21Matrix& other) const noexcept {
   bool result = true;
   if (this->rows_ != other.rows_ || this->cols_ != other.cols_) {
     result = false;
@@ -13,6 +13,7 @@ bool S21Matrix::EqMatrix(const S21Matrix& other) const {
   return result;
 }
 
-inline bool S21Matrix::GetDiff(const double value1, const double value2) const {
-  return std::abs(value1 - value2) < S21Matrix::EPS;  // Try without namespace
+inline bool S21Matrix::GetDiff(const double value1,
+                               const double value2) const noexcept {
+  return std::abs(value1 - value2) < S21Matrix::EPS;
 }

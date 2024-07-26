@@ -32,14 +32,14 @@ S21Matrix::S21Matrix(const S21Matrix& other)
   }
 }
 
-S21Matrix::S21Matrix(S21Matrix&& other)
+S21Matrix::S21Matrix(S21Matrix&& other) noexcept
     : rows_(other.rows_), cols_(other.cols_), matrix_(other.matrix_) {
   other.matrix_ = nullptr;
   other.rows_ = 0;
   other.cols_ = 0;
 }
 
-S21Matrix::~S21Matrix() {
+S21Matrix::~S21Matrix() noexcept {
   if (matrix_ != nullptr) {
     if (rows_ != 0) {
       delete[] * matrix_;
@@ -93,10 +93,10 @@ void S21Matrix::SetCols(int cols) {
   this->cols_ = cols;
 }
 
-int S21Matrix::GetRows() const { return this->rows_; }
+int S21Matrix::GetRows() const noexcept { return this->rows_; }
 
-int S21Matrix::GetCols() const { return this->cols_; }
+int S21Matrix::GetCols() const noexcept { return this->cols_; }
 
-double** S21Matrix::GetMatrix() { return this->matrix_; }
+double** S21Matrix::GetMatrix() noexcept { return this->matrix_; }
 
-void S21Matrix::SetMatrix(double** matrix) { this->matrix_ = matrix; }
+void S21Matrix::SetMatrix(double** matrix) noexcept { this->matrix_ = matrix; }
