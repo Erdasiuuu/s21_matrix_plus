@@ -19,7 +19,7 @@ $(TARGET):
 	ar rcs $(TARGET) *.o
 
 test: $(TARGET)
-	$(CC) $(CFLAGS) --coverage $(SOURCES) test.cc $(TARGET) $(TEST_LIBS) -o test -g
+	$(CC) $(CFLAGS) --coverage $(SOURCES) test.cc $(TARGET) $(TEST_LIBS) -o test
 	./test
 	
 gcov_report: test
@@ -27,12 +27,14 @@ gcov_report: test
 	genhtml -o report/ gcov_test.info
 	open ./report/index.html
 
-clean:
-	rm -rf ./*.o ./*.a gcov_test ./*.gcno ./*.gcda report/ ./test ./test.c ./*.info
+valgrind: $(TARGET) test
+	valgrind --trace-children=yes --track-origins=yes --leak-check=full ./test > valgrind_log.txt 2>&1
 
 clang-format:
 	clang-format -style=Google -n $(SOURCES)
 	clang-format -style=Google -i $(SOURCES)
 
+clean:
+	rm -rf ./*.o ./*.a gcov_test ./*.gcno ./*.gcda report/ ./test ./test.c ./*.info valgrind_log.txt
 
 rebuild: clean all
