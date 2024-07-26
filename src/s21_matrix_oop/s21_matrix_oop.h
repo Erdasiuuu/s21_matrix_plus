@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <cmath>
 #include <cstring>
-#include <iostream>  // X
 #include <stdexcept>
 #include <utility>
 
@@ -15,7 +14,10 @@ class S21Matrix {
   S21Matrix(const S21Matrix& other);
   S21Matrix(S21Matrix&& other);
   ~S21Matrix();
+ private:
+  void AllocateMatrix();
 
+ public:
   bool EqMatrix(const S21Matrix& other) const;
   void SumMatrix(const S21Matrix& other);
   void SubMatrix(const S21Matrix& other);
@@ -25,7 +27,12 @@ class S21Matrix {
   S21Matrix CalcComplements() const;
   double Determinant() const;
   S21Matrix InverseMatrix() const;
+ private:
+  void UpBiggerValue(int index, double& result);
+  void DiffRows(int index);
+  S21Matrix GetMinorMatrix(int row, int col) const;
 
+ public:
   S21Matrix operator+(const S21Matrix& other) const;
   S21Matrix operator-(const S21Matrix& other) const;
   S21Matrix operator*(const S21Matrix& other) const;
@@ -50,11 +57,6 @@ class S21Matrix {
   int rows_;
   int cols_;
   double** matrix_;
-
-  void UpBiggerValue(int index, double& result);
-  void DiffRows(int index);
-  S21Matrix GetMinorMatrix(int row, int col) const;
-  void AllocateMatrix();
 
   static const std::string INCORRECT_SIZE;
   static const double EPS;

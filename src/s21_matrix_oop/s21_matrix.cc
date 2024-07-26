@@ -56,13 +56,15 @@ void S21Matrix::SetRows(int rows) {
   }
   int exist_length = std::min(rows, this->rows_);
   for (int index = 0; index < exist_length; index++) {
-    std::copy(new_matrix[index], &new_matrix[index + 1][-1],
+    std::copy(new_matrix[index], &new_matrix[index][this->cols_],
               this->matrix_[index]);
   }
+  int cols = this->cols_;
   this->~S21Matrix();
   this->matrix_ = new_matrix;
   new_matrix = nullptr;
   this->rows_ = rows;
+  this->cols_ = cols;
 }
 
 void S21Matrix::SetCols(int cols) {

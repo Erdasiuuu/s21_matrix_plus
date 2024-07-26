@@ -20,12 +20,12 @@ $(TARGET):
 
 test: $(TARGET)
 	$(CC) $(CFLAGS) --coverage $(SOURCES) test.cc $(TARGET) $(TEST_LIBS) -o test -g
-#	./test
+	./test
 	
 gcov_report: test
 	lcov -o gcov_test.info $(GCOV_FLAG) -c -d .
 	genhtml -o report/ gcov_test.info
-#	open ./report/index.html
+	open ./report/index.html
 
 clean:
 	rm -rf ./*.o ./*.a gcov_test ./*.gcno ./*.gcda report/ ./test ./test.c ./*.info
