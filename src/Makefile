@@ -8,7 +8,7 @@ GCOV_FLAG = --no-external
 TARGET=s21_matrix_oop.a
 
 ifneq ($(OS), Darwin)
-	TEST_LIBS = -lgtest -lsubunit -pthread -lrt -lm
+	TEST_LIBS = -lgtest -pthread -lrt
 	GCOV_FLAG =
 endif
 
@@ -19,16 +19,19 @@ $(TARGET):
 	ar rcs $(TARGET) *.o
 
 test: $(TARGET)
-	$(CC) $(CFLAGS) --coverage $(SOURCES) test.cc $(TARGET) $(TEST_LIBS) -o test -g
-#	./test
-	
+	$(CC) $(CFLAGS) --coverage $(SOURCES) test.cc $(TARGET) $(TEST_LIBS) -o test
+	./test
+
+debug: $(TARGET)
+	$(CC) $(SOURCES) test.cc $(TARGET) $(TEST_LIBS) -o test -g
+
 gcov_report: test
 	lcov -o gcov_test.info $(GCOV_FLAG) -c -d .
 	genhtml -o report/ gcov_test.info
 	open ./report/index.html
 
-valgrind: $(TARGET) test
-	valgrind --trace-children=yes --track-origins=yes --leak-check=full ./test > valgrind_log.txt 2>&1
+valgrind: $(TARGET) debug
+	valgrind --trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all ./test > valgrind_log.txt 2>&1
 
 clang-format:
 	clang-format -style=Google -n $(SOURCES)

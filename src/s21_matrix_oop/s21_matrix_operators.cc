@@ -8,9 +8,9 @@ S21Matrix& S21Matrix::operator=(const S21Matrix& other) {
 
 S21Matrix& S21Matrix::operator=(S21Matrix&& other) {
   if (this != &other) {
-    std::swap(rows_, other.rows_);
-    std::swap(cols_, other.cols_);
-    std::swap(matrix_, other.matrix_);
+    std::swap(this->rows_, other.rows_);
+    std::swap(this->cols_, other.cols_);
+    std::swap(this->matrix_, other.matrix_);
   }
   return *this;
 }
@@ -38,7 +38,7 @@ S21Matrix S21Matrix::operator-(const S21Matrix& other) const {
   return tmp;
 }
 
-S21Matrix operator*(double number, const S21Matrix& matrix) noexcept {
+S21Matrix operator*(double number, const S21Matrix& matrix) {
   S21Matrix tmp = matrix * number;
   return tmp;
 }

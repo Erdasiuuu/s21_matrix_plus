@@ -41,7 +41,7 @@ S21Matrix::S21Matrix(S21Matrix&& other)
 
 S21Matrix::~S21Matrix() {
   if (matrix_ != nullptr) {
-    if (cols_ != 0) {
+    if (rows_ != 0) {
       delete[] * matrix_;
     }
     delete[] matrix_;
