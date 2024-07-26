@@ -5,4 +5,5 @@ s21_matrix_oop.a
 test
 *.gcda
 *.gcno
-
+*.info
+report
