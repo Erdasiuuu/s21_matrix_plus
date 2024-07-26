@@ -38,13 +38,13 @@ bool CheckMatrix(S21Matrix matrix, double arr[]) {
   }
   return result;
 }
-
 TEST(Matrix, DefaultConstructor) {
   S21Matrix* matrix = new S21Matrix();
-  EXPECT_EQ(matrix->GetRows(), 0);
-  EXPECT_EQ(matrix->GetCols(), 0);
+  EXPECT_EQ(matrix->GetRows(), 1);
+  EXPECT_EQ(matrix->GetCols(), 1);
   delete matrix;
 }
+
 TEST(Constructor, ConstructorWithRowsCols1) {
   int rows = 2;
   int cols = 3;
@@ -333,8 +333,8 @@ TEST(Method, MulMatrix2) {
 }
 
 TEST(Method, MulMatrixFailer1) {
-  S21Matrix mat_1;
-  S21Matrix mat_2(1, 1);
+  S21Matrix mat_1(3, 3);
+  S21Matrix mat_2;
   EXPECT_THROW(mat_1.MulMatrix(mat_2), std::logic_error);
 }
 
@@ -645,8 +645,8 @@ TEST(Operator, MulMatrixOperator2) {
 }
 
 TEST(Operator, MulMatrixOperatorFailer) {
-  S21Matrix mat_1;
-  S21Matrix mat_2(1, 1);
+  S21Matrix mat_1(3, 3);
+  S21Matrix mat_2;
   EXPECT_THROW(
       {
         mat_1* mat_2;

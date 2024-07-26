@@ -5,17 +5,17 @@ const std::string S21Matrix::INCORRECT_SIZE =
     "Matrix sizes not correct for this method";
 
 void S21Matrix::AllocateMatrix() {
-  this->matrix_ = new double*[rows_]();
-  *this->matrix_ = new double[rows_ * cols_]();
-  for (int i = 1; i < rows_; i++) {
+  this->matrix_ = new double*[this->rows_](); 
+  *this->matrix_ = new double[this->rows_ * this->cols_]();
+  for (int i = 1; i < this->rows_; i++) {
     this->matrix_[i] = *this->matrix_ + i * cols_;
   }
 }
 
-S21Matrix::S21Matrix() : S21Matrix(0, 0) {}
+S21Matrix::S21Matrix() : S21Matrix(1, 1) {}
 
 S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
-  if (this->rows_ < 0 || this->cols_ < 0) {
+  if (this->rows_ <= 0 || this->cols_ <= 0) {
     throw std::logic_error("The matrix size must be greater or equal than 0");
   }
   this->AllocateMatrix();
